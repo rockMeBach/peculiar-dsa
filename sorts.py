@@ -48,7 +48,7 @@ def quickSort(l, r, arr):
             i += 1
 
         # loop until you find a value lesser than the pivot
-        while j >= l and arr[j] > arr[l]:
+        while j > l and arr[j] > arr[l]:
             j -= 1
 
         # put lesser values on the left
@@ -65,7 +65,7 @@ def quickSort(l, r, arr):
     quickSort(j + 1, r, arr)
 
 
-arr = [2,5,3,4,0,1]
+arr = [2,1,3]
 print("input", arr)
 quickSort(0, len(arr) - 1, arr)
 print("output", arr)
