@@ -4,7 +4,7 @@
 
 def mergeSort(start, end, arr):
     if start >= end:
-        return [arr[end]]
+        return [arr[end]]   
 
     mid = (start + end) // 2
 
@@ -33,39 +33,39 @@ def mergeSort(start, end, arr):
 
     return new_arr
 
-# find the pivot
-# any elem x that is x <= pivot goes on the left
-# x >= pivot goes on the right
-# do the same on both the sides of the pivot
+# quicksort implementation
 
-def quickSort(arr):
-    if not arr:
-        return []
+def quickSort(l, r, arr):
+    if l >= r:
+        return
 
-    n = len(arr)
-    mid = n // 2
+    # l is the pivot
+    i, j = l, r
 
-    pivot = arr[mid]
-    l_arr, r_arr = [], []
-    i = 0
-
-    while i < n:
-        if i == mid:
+    while i < j:
+        # loop until you find a value greater than the pivot
+        while i <= r and arr[i] <= arr[l]:
             i += 1
-            continue
 
-        if arr[i] <= pivot:
-            l_arr.append(arr[i])
-        else:
-            r_arr.append(arr[i])
+        # loop until you find a value lesser than the pivot
+        while j >= l and arr[j] > arr[l]:
+            j -= 1
 
-        i += 1
+        # put lesser values on the left
+        # greater on the right
+        # only if i and j haven't overlapped
+        if i < j:
+            arr[i], arr[j] = arr[j], arr[i]
 
-    arr1 = quickSort(l_arr)
-    arr2 = quickSort(r_arr)
+    # the correct position of the pivot in the sorted array is at j
+    arr[l], arr[j] = arr[j], arr[l]
 
-    return arr1 + [pivot] + arr2
+    # recurse for the left and right part of the pivot
+    quickSort(l, j - 1, arr)
+    quickSort(j + 1, r, arr)
 
-arr = [7,3,4,8,3,6,9,9,3,4,6,0,2,5,6,3,82,53,9,4,7]
-arr = quickSort(arr)
-print(arr)
+
+arr = [2,5,3,4,0,1]
+print("input", arr)
+quickSort(0, len(arr) - 1, arr)
+print("output", arr)
