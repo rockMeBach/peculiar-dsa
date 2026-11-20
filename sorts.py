@@ -1,37 +1,40 @@
+# recurse:
 # divide the array into 2 halves
-# then sort each sub-array
-# recurse
+# then sort both the halves
+# combine
 
-def mergeSort(start, end, arr):
-    if start >= end:
-        return [arr[end]]   
+def mergeSort(arr):
+    if len(arr) <= 1:
+        return arr
 
-    mid = (start + end) // 2
+    def combine(left, right):
+        results = []
+        i, j = 0, 0
 
-    arr1 = mergeSort(start, mid, arr)
-    arr2 = mergeSort(mid + 1, end, arr)
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]:
+                results.append(left[i])
+                i += 1
+            else:
+                results.append(right[j])
+                j += 1
 
-    new_arr = []
-
-    i, j = 0, 0
-
-    while i < len(arr1) and j < len(arr2):
-        if arr1[i] <= arr2[j]:
-            new_arr.append(arr1[i])
+        while i < len(left):
+            results.append(left[i])
             i += 1
-        else:
-            new_arr.append(arr2[j])
+
+        while j < len(right):
+            results.append(right[j])
             j += 1
 
-    while i < len(arr1):
-        new_arr.append(arr1[i])
-        i += 1
+        return results
 
-    while j < len(arr2):
-        new_arr.append(arr2[j])
-        j += 1
+    mid = len(arr) // 2
 
-    return new_arr
+    left = mergeSort(arr[:mid])
+    right = mergeSort(arr[mid:])
+
+    return combine(left, right)
 
 # quicksort implementation
 
@@ -65,7 +68,6 @@ def quickSort(l, r, arr):
     quickSort(j + 1, r, arr)
 
 
-arr = [2,1,3]
-print("input", arr)
-quickSort(0, len(arr) - 1, arr)
-print("output", arr)
+arr = [1,2]
+arr = mergeSort(arr)
+print(arr[:1], arr[1:])
